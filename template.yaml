@@ -1,0 +1,60 @@
+Resources:
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowMethods: "'OPTIONS,GET,POST'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'*'"
+
+  PresignFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: api/presign.handler
+      Runtime: nodejs20.x
+      CodeUri: ./dist
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: !Sub "${BUCKET_NAME}"
+      Environment:
+        Variables:
+          BUCKET_NAME: !Sub "${BUCKET_NAME}"
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref MyApi
+            Path: /presign
+            Method: post
+
+  BrandFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: api/brand.handler
+      Runtime: nodejs20.x
+      CodeUri: ./dist
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          BRAND_BUCKET: !Sub "${BUCKET_NAME}"
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref MyApi
+            Path: /brand
+            Method: post
+
+  PresignFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/PresignFunctionLogGroup
+      RetentionInDays: 14
+
+  BrandFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/BrandFunctionLogGroup
+      RetentionInDays: 30

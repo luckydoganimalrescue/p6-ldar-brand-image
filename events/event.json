@@ -1,0 +1,7 @@
+{
+  "httpMethod": "POST",
+  "body": "{\"filename\": \"testfile.jpg\"}",
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}
