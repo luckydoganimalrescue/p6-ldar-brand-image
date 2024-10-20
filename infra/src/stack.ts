@@ -1,4 +1,5 @@
 import type { Construct } from 'constructs'
+import * as path from 'node:path'
 import * as cdk from 'aws-cdk-lib'
 import * as apigw from 'aws-cdk-lib/aws-apigatewayv2'
 import * as apigwi from 'aws-cdk-lib/aws-apigatewayv2-integrations'
@@ -11,8 +12,8 @@ import * as route53 from 'aws-cdk-lib/aws-route53'
 import * as route53targets from 'aws-cdk-lib/aws-route53-targets'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment'
-import * as ses from 'aws-cdk-lib/aws-ses'
 
+import * as ses from 'aws-cdk-lib/aws-ses'
 import * as floyd from 'cdk-iam-floyd'
 
 const HOSTED_ZONE_NAME = 'p6m7g8.net'
@@ -90,7 +91,12 @@ export class MyStack extends cdk.Stack {
     })
 
     const presignFunc = new lambdajs.NodejsFunction(this, 'presign', {
-      runtime: lambda.Runtime.NODEJS_18_X,
+      runtime: lambda.Runtime.NODEJS_20_X,
+      entry: path.join(__dirname, '../../api/src/presign.ts'),
+      handler: 'handler',
+      bundling: {
+        minify: true,
+      },
     })
     bucket.grantPut(presignFunc)
     bucket.grantPublicAccess('*', 's3:PutObject')
@@ -98,13 +104,15 @@ export class MyStack extends cdk.Stack {
     presignFunc.addEnvironment('BUCKET_NAME', bucket.bucketName)
     const brandFunc = new lambdajs.NodejsFunction(this, 'brand', {
       runtime: lambda.Runtime.NODEJS_20_X,
+      entry: path.join(__dirname, '../../api/src/brand.ts'),
+      handler: 'handler',
       tracing: lambda.Tracing.ACTIVE,
       timeout: cdk.Duration.minutes(14),
       memorySize: 4096,
       ephemeralStorageSize: cdk.Size.mebibytes(3072),
       bundling: {
         nodeModules: ['sharp'],
-        forceDockerBundling: true,
+        externalModules: ['@aws-sdk/*'],
         minify: true,
       },
     })
@@ -179,7 +187,7 @@ export class MyStack extends cdk.Stack {
       target: apiGatewayTarget,
     })
 
-    const sourceAsset = s3deploy.Source.asset('./website')
+    const sourceAsset = s3deploy.Source.asset('../website/out')
 
     // eslint-disable-next-line no-new
     new s3deploy.BucketDeployment(this, 'DeployWithInvalidation', {

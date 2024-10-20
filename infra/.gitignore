@@ -1,0 +1,8 @@
+.DS_Store
+.swc/
+.pnpm-store/
+cdk.out
+coverage/
+dist/
+logs
+node_modules/

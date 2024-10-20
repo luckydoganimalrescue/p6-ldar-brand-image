@@ -2,7 +2,7 @@
 
 import process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
-import { MyStack } from '../infra/stack'
+import { MyStack } from '../src/stack'
 
 // Define the environment for deployment
 const theEnv = {
