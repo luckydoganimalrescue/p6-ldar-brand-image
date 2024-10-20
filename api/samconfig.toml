@@ -1,0 +1,10 @@
+version = 0.1
+
+[default.deploy]
+stack_name = "p6-ldar-cdk-pnp-brand-image"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+
+[default.package]
+s3_bucket = "p6-ldar-cdk-projen-brand-image-mybucketf68f3ff0-ild7kqxq8vce"
+output_template_file = "template-output.yaml"

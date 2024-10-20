@@ -1,0 +1,76 @@
+{
+  "name": "p6-ldar-cdk-projen-brand-image",
+  "description": "APIGW Receiver Serverless Image Brander for LDAR Pets",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luckydoganimalrescue/p6-ldar-cdk-pnp-brand-image.git"
+  },
+  "version": "0.3.0",
+  "author": {
+    "name": "Philip M. Gollucci",
+    "email": "pgollucci@p6m7g8.com",
+    "url": "https://www.linkedin.com/in/pgollucci",
+    "organization": true
+  },
+  "keywords": [
+    "branding",
+    "cat",
+    "dog",
+    "ldar",
+    "pets",
+    "aws",
+    "lambda",
+    "samcli"
+  ],
+  "engines": {
+    "node": ">= 20.10.18"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "src/presign.ts",
+  "scripts": {
+    "all": "yarn nuke && yarn install && yarn docker && yarn sam:container && yarn run ci",
+    "bundle": "node --trace-deprecation esbuild.config.mjs",
+    "ci": "yarn run lint && yarn run test && yarn run bundle",
+    "docker": "docker run -it --rm -v $(pwd):/app -w /app node:20 bash -c \"rm -rf node_modules && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 CI=1 corepack enable && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 CI=1 yarn install\"",
+    "nuke": "rm -rf .aws-sam coverage dist node_modules .yarn",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "sam:container": "sam build --use-container",
+    "sam:start:api": "yarn run ci && sam local start-api --port 3001 --debug",
+    "sam:invoke:presign": "yarn run ci && sam local invoke PresignFunction --event events/event.json",
+    "sam:invoke:brand": "yarn run ci && sam local invoke BrandFunction --event events/brand.json",
+    "test": "node --trace-deprecation ./node_modules/jest/bin/jest.js  --config jest.config.ts --coverage --passWithNoTests",
+    "test:watch": "node --trace-deprecation ./node_modules/jest/bin/jest.js  --config jest.config.ts --watch --coverage",
+    "type": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.675.0",
+    "@aws-sdk/client-ses": "^3.675.0",
+    "@aws-sdk/s3-request-presigner": "^3.675.0",
+    "adm-zip": "^0.5.16",
+    "aws-lambda": "^1.0.7",
+    "buffer": "^6.0.3",
+    "mime-types": "^2.1.35",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.7.3",
+    "@swc/jest": "^0.2.36",
+    "@types/adm-zip": "^0.5.5",
+    "@types/aws-lambda": "^8.10.145",
+    "@types/jest": "^29.5.13",
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^22.7.5",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.12.0",
+    "eslint-plugin-import": "^2.31.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "packageManager": "yarn@4.5.1"
+}
