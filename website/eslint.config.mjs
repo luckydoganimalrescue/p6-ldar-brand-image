@@ -8,12 +8,10 @@ export default antfu({
   ignores: [
     '.mergify.yml',
     '.pnpm-store/',
-    '.vscode/settings.json',
-    'events/event.json',
+    '.vscode/',
     'next-env.d.ts',
     'out/',
     'package.json',
-    'src/dotenv.ts',
     'src/pages/index.tsx',
     'template.yaml',
     'tsconfig.json',

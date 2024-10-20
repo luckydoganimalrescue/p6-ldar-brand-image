@@ -13,56 +13,43 @@
     "organization": true
   },
   "keywords": [
-    "aws",
     "branding",
     "cat",
-    "cdk",
     "dog",
     "ldar",
-    "pets"
+    "pets",
+    "aws",
+    "nextjs",
+    "react",
+    "tailwindcss"
   ],
   "engines": {
-    "node": ">= 20.18.0"
+    "node": ">= 22.7.0"
   },
   "license": "Apache-2.0",
   "type": "module",
-  "main": "src/main.ts",
+  "main": "src/index.tsx",
   "scripts": {
-    "dev": "next dev",
-    "build": "pnpm run lint && pnpm run test && pnpm run esbuild:lambda && next build -d",
-    "start": "pnpm run build && pnpm serve out",
+    "dev": "pnpm next dev",
+    "build": "pnpm run lint && pnpm run test && pnpm next build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "sam-start-api": "export $(grep -v '^#' .env.local | xargs) && pnpm esbuild:lambda && sam local start-api -p 3001",
-    "sam-invoke-presign": "pnpm run build && sam local invoke PresignFunction --event events/event.json",
-    "esbuild:lambda": "node --trace-deprecation esbuild.config.mjs",
+    "start": "pnpm run build && pnpm serve out",
     "test": "node --trace-deprecation ./node_modules/jest/bin/jest.js  --config jest.config.ts --coverage --passWithNoTests",
     "test:watch": "node --trace-deprecation ./node_modules/jest/bin/jest.js  --config jest.config.ts --watch --coverage",
-    "type": "tsc --noEmit",
-    "nuke": "rm -rf .next coverage out node_modules pnpm-lock.yaml"
+    "type": "tsc --noEmit"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.675.0",
-    "@aws-sdk/client-ses": "^3.675.0",
-    "@aws-sdk/s3-request-presigner": "^3.675.0",
     "@headlessui/react": "^2.1.10",
     "@next/mdx": "^14.2.15",
     "@tailwindcss/typography": "^0.5.15",
-    "adm-zip": "^0.5.16",
-    "aws-cdk": "^2.162.1",
-    "aws-cdk-lib": "^2.162.1",
-    "aws-lambda": "^1.0.7",
     "buffer": "^6.0.3",
-    "cdk-iam-floyd": "^0.658.0",
-    "constructs": "^10.4.2",
     "jest-environment-jsdom": "^29.7.0",
     "js-yaml": "^4.1.0",
-    "mime-types": "^2.1.35",
     "next": "15.0.0-canary.199",
     "next-safe": "^3.5.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "sharp": "^0.33.5"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.7.3",
@@ -73,18 +60,14 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
-    "@types/adm-zip": "^0.5.5",
-    "@types/aws-lambda": "^8.10.145",
     "@types/jest": "^29.5.13",
     "@types/js-yaml": "^4.0.9",
-    "@types/mime-types": "^2.1.4",
     "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
     "autoprefixer": "^10.4.20",
-    "esbuild": "^0.24.0",
     "eslint": "^9.12.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react": "^7.37.1",
@@ -97,7 +80,6 @@
     "tailwindcss": "^3.4.13",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.3"
   },
   "packageManager": "pnpm@9.12.2+sha512.22721b3a11f81661ae1ec68ce1a7b879425a1ca5b991c975b074ac220b187ce56c708fe5db69f4c962c989452eee76c82877f4ee80f474cebd61ee13461b6228"

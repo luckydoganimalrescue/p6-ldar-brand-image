@@ -15,12 +15,12 @@ const customJestConfig: Config = {
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
 
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': '@swc/jest',
+    '^.+\\.(ts|tsx)$': '@swc/jest',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.tsx'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'], // moduleFileExtensions must include 'js' even though I don't use them
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
 }
 
 export default createJestConfig(customJestConfig)
