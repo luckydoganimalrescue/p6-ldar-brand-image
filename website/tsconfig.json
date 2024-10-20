@@ -46,7 +46,8 @@
     "test/**/*.tsx",
   ],
   "exclude": [
-    ".next""dist",
+    ".next",
+    "dist",
     "node_modules",
     "out",
   ]

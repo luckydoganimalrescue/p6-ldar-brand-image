@@ -30,8 +30,9 @@
   "type": "module",
   "main": "src/index.tsx",
   "scripts": {
-    "dev": "pnpm next dev",
-    "build": "pnpm run lint && pnpm run test && pnpm next build",
+    "build": "pnpm run ci && pnpm next build",
+    "ci": "pnpm run lint && pnpm run test",
+    "dev": "pnpm run ci && pnpm next dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "start": "pnpm run build && pnpm serve out",

@@ -1,0 +1,10 @@
+.DS_Store
+.env.local
+.next/
+.swc/
+.pnpm-store/
+coverage/
+dist/
+logs
+node_modules/
+out/
