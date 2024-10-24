@@ -112,7 +112,7 @@ importers:
         specifier: ^8.4.47
         version: 8.4.47
       serve:
-        specifier: ^14.2.3
+        specifier: ^14.2.4
         version: 14.2.4
       tailwindcss:
         specifier: ^3.4.13
