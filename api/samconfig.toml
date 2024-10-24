@@ -1,7 +1,7 @@
 version = 0.1
 
 [default.deploy]
-stack_name = "p6-ldar-cdk-pnp-brand-image"
+stack_name = "p6-ldar-brand-image"
 region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
 
