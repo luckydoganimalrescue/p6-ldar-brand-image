@@ -8,25 +8,25 @@ Resources:
         AllowHeaders: "'Content-Type'"
         AllowOrigin: "'*'"
 
-  # PresignFunction:
-  #   Type: AWS::Serverless::Function
-  #   Properties:
-  #     Handler: dist/presign.handler
-  #     Runtime: nodejs20.x
-  #     CodeUri: ./dist
-  #     Policies:
-  #       - S3FullAccessPolicy:
-  #           BucketName: !Sub "${BUCKET_NAME}"
-  #     Environment:
-  #       Variables:
-  #         BUCKET_NAME: !Sub "${BUCKET_NAME}"
-  #     Events:
-  #       ApiEvent:
-  #         Type: Api
-  #         Properties:
-  #           RestApiId: !Ref MyApi
-  #           Path: /presign
-  #           Method: post
+  PresignFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/presign.handler
+      Runtime: nodejs20.x
+      CodeUri: ./dist
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: !Sub "${BUCKET_NAME}"
+      Environment:
+        Variables:
+          BUCKET_NAME: !Sub "${BUCKET_NAME}"
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref MyApi
+            Path: /presign
+            Method: post
 
   BrandFunction:
     Type: AWS::Serverless::Function
@@ -47,11 +47,11 @@ Resources:
             Path: /brand
             Method: post
 
-  # PresignFunctionLogGroup:
-  #   Type: AWS::Logs::LogGroup
-  #   Properties:
-  #     LogGroupName: /aws/lambda/PresignFunctionLogGroup
-  #     RetentionInDays: 14
+  PresignFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/PresignFunctionLogGroup
+      RetentionInDays: 14
 
   BrandFunctionLogGroup:
     Type: AWS::Logs::LogGroup
